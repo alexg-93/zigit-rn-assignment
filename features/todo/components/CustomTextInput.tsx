@@ -28,6 +28,3 @@ const styles = StyleSheet.create({
         flex: 0.9
       },
 });
-
-
-export default TextInput;

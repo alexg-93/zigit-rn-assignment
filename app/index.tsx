@@ -1,10 +1,10 @@
 import React from "react";
-import ToDoListScreen from "@/features/todo/screens/ToDoListScreen";
+import RootLayout from "./_layout";
 
 
 
 export default function Index() {
   return (
-    <ToDoListScreen />
+    <RootLayout />
   );
 }
