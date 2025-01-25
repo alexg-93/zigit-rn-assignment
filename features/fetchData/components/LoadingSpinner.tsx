@@ -1,20 +1,22 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { ActivityIndicator } from 'react-native-paper';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
-export const LoadingSpinner = () => {
-    return (
-        <View style={styles.spinnerContainer}>
-            <ActivityIndicator size="large" color="#6200ee" animating={true} />
-        </View>
-    );
+interface LoadingSpinnerProps {
+  color?: string;
 }
 
+export const LoadingSpinner = ({ color = '#2A004E' }: LoadingSpinnerProps) => {
+  return (
+    <View style={styles.container}>
+      <ActivityIndicator size="large" color={color} />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    spinnerContainer: {
-       position: 'absolute',
-       top: '50%',
-       left: '50%'
-      },
-})
+  container: {
+    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});

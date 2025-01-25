@@ -1,63 +1,81 @@
-import React,{memo} from 'react';
-import { StyleSheet, Text ,View} from 'react-native';
-import { Checkbox, IconButton } from 'react-native-paper';
+import React, { memo } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { Task } from '../types/todo.types';
-import Animated,{ FadeIn, FadeOut } from 'react-native-reanimated';
-
+import { useTheme } from '@/features/settings/hooks/useTheme';
+import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 interface TaskItemProps {
   task: Task;
-  onToggleComplete: (taskId: string) => void;
-  onDelete: (taskId: string) => void;
+  onToggleComplete: (id: string) => void;
+  onDelete: (id: string) => void;
 }
 
-const TaskItem = ({task, onToggleComplete, onDelete }: TaskItemProps)=>{
+const TaskItem = ({ task, onToggleComplete, onDelete }: TaskItemProps) => {
+  const { colors } = useTheme();
+
   return (
     <Animated.View
-      style={styles.taskItemContainer}
       entering={FadeIn}
       exiting={FadeOut}
+      style={[styles.container, { backgroundColor: colors.card, borderColor: colors.border }]}
     >
-      <View style={styles.checkboxContainer}>
-        <Checkbox
-            status={task.completed ? 'checked' : 'unchecked'}
-            onPress={() => onToggleComplete(task.id)}
+      <TouchableOpacity
+        style={styles.checkboxContainer}
+        onPress={() => onToggleComplete(task.id)}
+      >
+        <Ionicons
+          name={task.completed ? 'checkbox' : 'square-outline'}
+          size={24}
+          color={task.completed ? colors.primary : colors.secondary}
         />
-      </View>
-  
-        <Text style={[styles.taskText, task.completed && styles.completed]}>
-            {task.title}
+        <Text
+          style={[
+            styles.text,
+            { color: colors.text },
+            task.completed && styles.completedText,
+          ]}
+        >
+          {task.title}
         </Text>
-   
-      <IconButton icon="delete" onPress={() => onDelete(task.id)} />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => onDelete(task.id)}>
+        <Ionicons name="trash-outline" size={24} color={colors.error} />
+      </TouchableOpacity>
     </Animated.View>
   );
 };
 
 const styles = StyleSheet.create({
-  taskItemContainer: {
-    flex:1,
+  container: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-   
+    justifyContent: 'space-between',
+    padding: 15,
+    marginVertical: 5,
+    borderRadius: 8,
+    borderWidth: 1,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 3,
   },
-  taskText: {
+  checkboxContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     flex: 1,
+  },
+  text: {
     fontSize: 16,
     marginLeft: 10,
   },
-  completed: {
+  completedText: {
     textDecorationLine: 'line-through',
-    color: '#888',
+    opacity: 0.7,
   },
-  checkboxContainer:{
-    borderColor:'black',
-    borderWidth:1,
-    borderRadius:10
-  }
 });
 
 export default memo(TaskItem);

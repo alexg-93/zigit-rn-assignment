@@ -1,32 +1,45 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import { DataItemProps } from '../types/data.types';
+import { View, Text, StyleSheet } from 'react-native';
+import { useTheme } from '@/features/settings/hooks/useTheme';
+import { DataItem } from '../types/data.types';
 
+interface ItemProps {
+  item: DataItem;
+}
 
-const Item = ({ item } : DataItemProps) => {
+const Item = ({ item }: ItemProps) => {
+
+  const { colors } = useTheme();
 
   return (
-    <View style={styles.itemContainer}>
-      <Text style={styles.title}>{item.title}</Text>
-      <Text style={styles.body}>{item.body}</Text>
+    <View style={[styles.container, { backgroundColor: colors.card, borderColor: colors.border }]}>
+      <Text style={[styles.title, { color: colors.text }]}>{item.title}</Text>
+      <Text style={[styles.body, { color: colors.secondary }]}>{item.body}</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  itemContainer: {
-    padding: 20,
-    borderRadius: 20,
+  container: {
+    padding: 15,
+    borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#ccc',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   title: {
+    fontSize: 18,
     fontWeight: 'bold',
-    fontSize: 16,
+    marginBottom: 8,
   },
   body: {
-    color: '#555',
-    marginTop: 5,
+    fontSize: 14,
+    lineHeight: 20,
   },
 });
 

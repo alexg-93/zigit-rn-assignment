@@ -7,32 +7,36 @@ import Item from '../components/Item';
 import { SearchTextInput } from '../components/SearchTextInput';
 import { useFilterData } from '../hooks/useFilterData';
 import { EmptyListComponent } from '../components/EmptyListComponent';
+import { useTheme } from '@/features/settings/hooks/useTheme';
 
 const DataScreen = () => {
-    
+  const { colors } = useTheme();  
   const { data, fetchNextPage, isLoading, hasMore } = useFetchData();
   const [searchText, setSearchText] = useState('');
   const filteredData = useFilterData(data, searchText);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <SearchTextInput
         value={searchText}
         onChangeText={setSearchText}
         placeholder="Search ..."
       />
-      {isLoading && <LoadingSpinner />}
+      {isLoading && <LoadingSpinner color={colors.primary} />}
       <FlatList
         data={searchText ? filteredData : data}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => <Item item={item} />}
         onEndReached={hasMore ? fetchNextPage : null}
         onEndReachedThreshold={0.5}
-        ItemSeparatorComponent={() => <View style={{ height: 15 }} />}
+        ItemSeparatorComponent={() => <View style={[styles.separator, { backgroundColor: colors.background }]} />}
         ListEmptyComponent={EmptyListComponent}
         scrollEnabled={!isLoading}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ opacity: isLoading ? 0.5 : 1 }}
+        contentContainerStyle={[
+          styles.listContent,
+          { opacity: isLoading ? 0.5 : 1, backgroundColor: colors.background }
+        ]}
       />
     </SafeAreaView>
   );
@@ -43,12 +47,11 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 30,
   },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 4,
-    padding: 10,
-    marginBottom: 20,
+  separator: {
+    height: 15,
+  },
+  listContent: {
+    flexGrow: 1,
   },
 });
 

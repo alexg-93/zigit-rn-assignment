@@ -2,29 +2,38 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { StatCardProps } from '../types/dashboard.types';
+import { useTheme } from '@/features/settings/hooks/useTheme';
 
-
-export const StatCard = ({ title, value, icon, color }: StatCardProps) => (
-  <View style={[styles.card, { borderLeftColor: color }]}>
-    <View style={styles.cardIcon}>
-      <Ionicons name={icon as any} size={24} color={color} />
+export const StatCard = ({ title, value, icon, color }: StatCardProps) => {
+  const { colors } = useTheme();
+  
+  return (
+    <View style={[
+      styles.card, 
+      { 
+        backgroundColor: colors.card,
+        borderLeftColor: color,
+        shadowColor: colors.shadow,
+      }
+    ]}>
+      <View style={styles.cardIcon}>
+        <Ionicons name={icon as any} size={24} color={color} />
+      </View>
+      <View style={styles.cardContent}>
+        <Text style={[styles.cardTitle, { color: colors.secondary }]}>{title}</Text>
+        <Text style={[styles.cardValue, { color }]}>{value}</Text>
+      </View>
     </View>
-    <View style={styles.cardContent}>
-      <Text style={styles.cardTitle}>{title}</Text>
-      <Text style={[styles.cardValue, { color }]}>{value}</Text>
-    </View>
-  </View>
-);
+  );
+};
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#fff',
     borderRadius: 12,
     padding: 20,
     marginBottom: 15,
     flexDirection: 'row',
     alignItems: 'center',
-    shadowColor: '#000',
     shadowOffset: {
       width: 5,
       height: 5,
@@ -42,7 +51,6 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontSize: 14,
-    color: '#666',
     marginBottom: 5,
   },
   cardValue: {

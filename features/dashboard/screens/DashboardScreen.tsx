@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   View,
   Text,
@@ -10,61 +10,81 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDashboardStats } from '../hooks/useDashboardStats';
 import { StatCard } from '../components/StatCard';
+import { useTheme } from '@/features/settings/hooks/useTheme';
 
 export default function DashboardScreen() {
-
+    
   const { stats, isLoading, refreshStats } = useDashboardStats();
+  const { colors } = useTheme();
 
-  if (isLoading) {
+  const renderContent = useCallback(() => {
+    if (isLoading) {
+      return (
+        <View style={[styles.loadingContainer, { backgroundColor: colors.background }]}>
+          <ActivityIndicator size="large" color={colors.primary} />
+        </View>
+      );
+    }
+
     return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#2A004E" />
-      </View>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        refreshControl={
+          <RefreshControl 
+            refreshing={isLoading} 
+            onRefresh={refreshStats}
+            tintColor={colors.primary}
+          />
+        }
+      >
+        <View style={styles.header}>
+          <Text style={[styles.title, { color: colors.text }]}>Tasks Overview</Text>
+          <Text style={[styles.subtitle, { color: colors.secondary }]}>Your task statistics</Text>
+        </View>
+
+        <View style={styles.statsContainer}>
+          <StatCard
+            title="Total Tasks"
+            value={stats.total}
+            icon="list"
+            color={colors.primary}
+          />
+          <StatCard
+            title="Completed"
+            value={stats.completed}
+            icon="checkmark-circle"
+            color="#4CAF50"
+          />
+          <StatCard
+            title="Pending"
+            value={stats.pending}
+            icon="time"
+            color="#FFA000"
+          />
+        </View>
+      </ScrollView>
     );
-  }
+  }, [colors, isLoading, refreshStats, stats]);
 
   return (
-    <SafeAreaView style={styles.container}>
-    <ScrollView
-      style={styles.container}
-      refreshControl={
-        <RefreshControl refreshing={isLoading} onRefresh={refreshStats} />
-      }
-    >
-      <View style={styles.header}>
-        <Text style={styles.title}>{'Tasks Overview'}</Text>
-        <Text style={styles.subtitle}>{'Your task statistics'}</Text>
-      </View>
-
-      <View style={styles.statsContainer}>
-        <StatCard
-          title="Total Tasks"
-          value={stats.total}
-          icon="list"
-          color="#2A004E"
-        />
-        <StatCard
-          title="Completed"
-          value={stats.completed}
-          icon="checkmark-circle"
-          color="#4CAF50"
-        />
-        <StatCard
-          title="Pending"
-          value={stats.pending}
-          icon="time"
-          color="#FFA000"
-        />
-      </View>
-    </ScrollView>
-    </SafeAreaView>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <SafeAreaView style={styles.container}>
+        {renderContent()}
+      </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
   },
   loadingContainer: {
     flex: 1,
@@ -73,18 +93,15 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: 20,
-    backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#2A004E',
   },
   subtitle: {
     fontSize: 16,
-    color: '#666',
     marginTop: 5,
   },
   statsContainer: {

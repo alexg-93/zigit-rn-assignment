@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
+import { useTheme } from '@/features/settings/hooks/useTheme';
 
 interface CustomButtonProps {
     mode?: 'contained' | 'outlined';
@@ -9,14 +10,35 @@ interface CustomButtonProps {
     disabled: boolean;
 }
 
-const CustomButton = ({mode = 'contained', onPress = () => {},buttonText = '', disabled = false}: CustomButtonProps) => {
-    return (
-        <View>
-         <Button disabled={disabled} mode={mode} onPress={onPress}>{buttonText}</Button>
-        </View>
-    );
-}
+const CustomButton = ({
+    mode = 'contained',
+    onPress = () => {},
+    buttonText = '',
+    disabled = false
+}: CustomButtonProps) => {
+    const { colors } = useTheme();
 
-const styles = StyleSheet.create({})
+    return (
+        <Button
+            disabled={disabled}
+            mode={mode}
+            onPress={onPress}
+            style={[
+                styles.button,
+                { borderColor: colors.primary }
+            ]}
+            labelStyle={{ color: mode === 'contained' ? colors.card : colors.primary }}
+            buttonColor={mode === 'contained' ? colors.primary : 'transparent'}
+        >
+            {buttonText}
+        </Button>
+    );
+};
+
+const styles = StyleSheet.create({
+    button: {
+        borderRadius: 8,
+    }
+});
 
 export default CustomButton;

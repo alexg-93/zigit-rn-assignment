@@ -1,15 +1,17 @@
 import React from 'react';
 import { Stack } from 'expo-router';
+import { ThemeProvider } from '@/features/settings/hooks/useTheme';
 
 export default function RootLayout() {
   return (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      {/* Index redirect screen */}
-      <Stack.Screen name="index" />
+    <ThemeProvider>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        {/* Index redirect screen */}
+        <Stack.Screen name="index" />
 
       {/* Auth group */}
       <Stack.Screen 
@@ -27,13 +29,14 @@ export default function RootLayout() {
         }} 
       />
 
-      {/* App group (tabs) */}
-      <Stack.Screen 
-        name="(tabs)" 
-        options={{ 
-          headerShown: false,
-        }} 
-      />
-    </Stack>
+        {/* App group (tabs) */}
+        <Stack.Screen 
+          name="(tabs)" 
+          options={{ 
+            headerShown: false,
+          }} 
+        />
+      </Stack>
+    </ThemeProvider>
   );
 }

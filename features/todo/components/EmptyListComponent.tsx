@@ -1,25 +1,29 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Text } from 'react-native-paper';
+import { View, Text, StyleSheet } from 'react-native';
+import { useTheme } from '@/features/settings/hooks/useTheme';
 
 export const EmptyListComponent = () => {
-    return (
-            <View style={styles.container}>
-                <Text style={styles.title}>{"No Tasks yet.."}</Text>
-            </View>
-    );
-}
+  const { colors } = useTheme();
+
+  return (
+    <View style={styles.container}>
+      <Text style={[styles.text, { color: colors.secondary }]}>
+        {`No tasks yet. Add a new task to get started!`}
+      </Text>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      marginTop: 20,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    title: {
-      fontSize: 24,
-      fontWeight: 'bold',
-    },
-})
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  text: {
+    fontSize: 16,
+    textAlign: 'center',
+  },
+});
 

@@ -10,11 +10,10 @@ import { useToggleCompleteTask } from '../hooks/useToggleCompleteTask';
 import { useDeleteTask } from '../hooks/useDeleteTask';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CustomButton from '../components/CustomButton';
-
+import { useTheme } from '@/features/settings/hooks/useTheme';
 
 const ToDoListScreen = () => {
-
-
+    const { colors } = useTheme();
     const {tasks, setTasks} = useLoadTasks();
     const [newTask, setNewTask] = useState<string>('');
 
@@ -23,51 +22,60 @@ const ToDoListScreen = () => {
     const { deleteTask } = useDeleteTask(tasks, setTasks);
 
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.mainTitleContainer}>
-               <Text style={styles.title}>{"To Do List"}</Text>
-            </View>
+        <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+            
             <View style={styles.inputContainer}>
-            <CustomTextInput onChangeText={setNewTask} value={newTask} label={'Add new task..'} mode={'outlined'} />
-            <CustomButton buttonText={'Add'} onPress={() =>{
-                addTask(newTask);
-                setNewTask('');
-            }} disabled={!newTask}  />
+                <CustomTextInput 
+                    onChangeText={setNewTask} 
+                    value={newTask} 
+                    label={'Add new task..'} 
+                    mode={'outlined'} 
+                />
+                <CustomButton 
+                    buttonText={'Add'} 
+                    onPress={() =>{
+                        addTask(newTask);
+                        setNewTask('');
+                    }} 
+                    disabled={!newTask}  
+                />
             </View>
             <FlatList
                 data={tasks}
                 keyExtractor={item => item.id}
                 renderItem={({ item }) => (
-                <TaskItem
-                    task={item}
-                    onToggleComplete={toggleComplete}
-                    onDelete={deleteTask}
-                />
+                    <TaskItem
+                        task={item}
+                        onToggleComplete={toggleComplete}
+                        onDelete={deleteTask}
+                    />
                 )}
-            ListEmptyComponent={EmptyListComponent}
-        />
+                ListEmptyComponent={EmptyListComponent}
+                style={{ backgroundColor: colors.background }}
+            />
         </SafeAreaView>
-  );
+    );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-  },
-  mainTitleContainer: {
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  }
+    container: {
+        flex: 1,
+        padding: 20,
+    },
+    mainTitleContainer: {
+        alignItems: 'center',
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 20,
+    },
+    inputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: 20,
+    }
 });
 
 export default ToDoListScreen;
