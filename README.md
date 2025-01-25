@@ -4,7 +4,7 @@ A modern local first App, feature-rich application built with React Native, Expo
 
 ## ✨ Features
 
-### 🔐 Authentication 
+### 🔐 Authentication (MOCK authentication with local storage)
 - Secure login and registration system
 - Persistent authentication state
 - Form validation and error handling
