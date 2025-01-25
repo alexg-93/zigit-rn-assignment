@@ -1,50 +1,117 @@
-# Welcome to your Expo app 👋
+# 📱 React Native ToDo App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A modern local first App, feature-rich application built with React Native, Expo, and TypeScript. This app showcases best practices in mobile development with a focus on user experience and clean architecture.
 
-## Get started
+## ✨ Features
 
-1. Install dependencies
+### 🔐 Authentication 
+- Secure login and registration system
+- Persistent authentication state
+- Form validation and error handling
 
-   ```bash
-   npm install
-   ```
+### 📋 Task Management
+- Create, read, update, and delete tasks
+- Mark tasks as complete/incomplete
+- Real-time task status updates
+- Smooth animations for task interactions
+- Empty state handling
 
-2. Start the app
+### 📊 Dashboard
+- Task statistics overview
+- Total tasks counter
+- Completed tasks tracking
+- Pending tasks monitoring
+- Real-time statistics updates
 
-   ```bash
-    npx expo start
-   ```
+### 📱 Data Features
+- Infinite scroll data fetching
+- Search functionality
+- Loading states
+- Error handling
+- Empty state handling
 
-In the output, you'll find options to open the app in a
+### 🎨 Theme System
+- Light and dark mode support
+- Dynamic theme switching
+- Persistent theme preferences
+- Consistent styling across the app
+- Adaptive status bar
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### 🏗️ Architecture & Technical Features
+- TypeScript for type safety
+- Custom hooks for business logic
+- Component reusability
+- Clean folder structure
+- Expo Router for navigation
+- AsyncStorage for local storage local-first
+- React Native Paper components
+- Responsive design
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## 🛠️ Technical Stack
 
-## Get a fresh project
+- **React Native** - Mobile framework
+- **Expo** - Development platform
+- **TypeScript** - Programming language
+- **React Navigation** - Navigation library
+- **AsyncStorage** - Local storage
+- **React Native Paper** - UI components
+- **Expo Router** - File-based routing
+- **React Native Reanimated** - Animations
 
-When you're ready, run:
+## 📂 Project Structure
 
-```bash
-npm run reset-project
+```
+src/
+├── app/                    # Expo Router files
+│   ├── (tabs)/            # Tab navigation
+│   └── _layout.tsx        # Root layout
+|   └── login.tsx         #login route
+|   └── register.tsx      #register route 
+├── features/              # Feature-based modules
+│   ├── auth/              # Authentication feature
+│   ├── todo/              # Todo management
+│   ├── dashboard/         # Statistics & overview
+│   ├── settings/          # App settings
+│   └── fetchData/         # Data fetching
+
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 🚀 Getting Started
 
-## Learn more
+1. **Clone the repository**
+```bash
+git clone https://github.com/alexg-93/zigit-rn-assignment.git
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+2. **Install dependencies**
+```bash
+cd react-native-todo-app
+npm install
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+3. **Start the development server**
+```bash
+npx expo start
+```
 
-## Join the community
+4. **Run on your device/simulator**
+- Press `i` for iOS simulator
+- Press `a` for Android simulator
+- Scan QR code with Expo Go app for physical device
 
-Join our community of developers creating universal apps.
+## 📱 Screenshots
+![alt text](image-2.png)
+![alt text](image-3.png)
+![alt text](image.png)
+![alt text](image-1.png)
+![alt text](image-4.png)
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+## 👨‍💻 Author
+
+- Alex Godienko
+- LinkedIn: https://www.linkedin.com/in/alex-gordienko93/
+
+---
+
+⭐️ Star this repo if you like it!
